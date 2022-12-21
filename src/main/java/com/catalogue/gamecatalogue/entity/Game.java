@@ -12,7 +12,8 @@ import java.util.List;
 @Data
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "game_seq_gen")
+    @SequenceGenerator(name = "game_seq_gen", sequenceName = "game_seq", allocationSize = 1)
     private long id;
     @NotBlank
     @Size(min=1, max=255)

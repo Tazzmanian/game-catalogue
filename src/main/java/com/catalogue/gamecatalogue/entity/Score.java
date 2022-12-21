@@ -10,13 +10,14 @@ import javax.validation.constraints.Min;
 @Data
 public class Score {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "score_seq_gen")
+    @SequenceGenerator(name = "score_seq_gen", sequenceName = "score_seq", allocationSize = 1)
     private long id;
     @Min(1)
     @Max(5)
     private short score;
 
     @ManyToOne
-    @JoinTable(name = "game_id")
+    @JoinColumn(name = "game_id")
     private Game game;
 }

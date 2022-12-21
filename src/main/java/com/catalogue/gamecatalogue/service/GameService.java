@@ -6,6 +6,8 @@ import com.catalogue.gamecatalogue.model.CreateGameDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class GameService {
 
@@ -40,5 +42,9 @@ public class GameService {
 
         gameRepository.save(game);
         return game.getId();
+    }
+
+    public List<Game> getAllGames() {
+        return gameRepository.findAll();
     }
 }

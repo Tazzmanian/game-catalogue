@@ -11,7 +11,8 @@ import java.util.Date;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
+    @SequenceGenerator(name = "user_seq_gen", sequenceName = "user_seq", allocationSize = 1)
     private long id;
     @Column(unique = true)
     @Email

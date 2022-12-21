@@ -10,7 +10,8 @@ import java.util.Date;
 @Data
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_seq_gen")
+    @SequenceGenerator(name = "comment_seq_gen", sequenceName = "comment_seq", allocationSize = 1)
     private long id;
     @Size(min=5, max=1000)
     private String comment;
@@ -19,6 +20,6 @@ public class Comment {
     @Basic
     private Date modifiedAt;
     @ManyToOne
-    @JoinTable(name = "game_id")
+    @JoinColumn(name = "game_id")
     private Game game;
 }

@@ -1,0 +1,118 @@
+CREATE SEQUENCE  IF NOT EXISTS comment_seq START WITH 1 INCREMENT BY 1;
+
+DROP TABLE IF EXISTS Comment;
+CREATE TABLE IF NOT EXISTS Comment (
+  id BIGINT NOT NULL,
+   comment VARCHAR(255),
+   createdAt TIMESTAMP WITHOUT TIME ZONE,
+   modifiedAt TIMESTAMP WITHOUT TIME ZONE,
+   game_id BIGINT,
+   CONSTRAINT pk_comment PRIMARY KEY (id)
+);
+
+ALTER TABLE Comment ADD CONSTRAINT FK_COMMENT_ON_GAME FOREIGN KEY (game_id) REFERENCES Game (id);
+
+CREATE SEQUENCE IF NOT EXISTS developer_seq START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE IF NOT EXISTS Developer (
+  id BIGINT NOT NULL,
+   name VARCHAR(255),
+   CONSTRAINT pk_developer PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS game_seq START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE IF NOT EXISTS Game (
+  id BIGINT NOT NULL,
+   name VARCHAR(255),
+   CONSTRAINT pk_game PRIMARY KEY (id)
+);
+
+ALTER TABLE Game DROP CONSTRAINT IF EXISTS uc_game_name;
+ALTER TABLE Game ADD CONSTRAINT uc_game_name UNIQUE (name);
+
+CREATE SEQUENCE IF NOT EXISTS genre_seq START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE IF NOT EXISTS Genre (
+  id BIGINT NOT NULL,
+   name VARCHAR(255),
+   CONSTRAINT pk_genre PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS platform_seq START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE IF NOT EXISTS Platform (
+  id BIGINT NOT NULL,
+   name VARCHAR(255),
+   CONSTRAINT pk_platform PRIMARY KEY (id)
+);
+
+ALTER TABLE Platform DROP CONSTRAINT IF EXISTS uc_platform_name;
+ALTER TABLE Platform ADD CONSTRAINT uc_platform_name UNIQUE (name);
+
+ALTER TABLE Genre DROP CONSTRAINT IF EXISTS uc_genre_name;
+ALTER TABLE Genre ADD CONSTRAINT uc_genre_name UNIQUE (name);
+
+CREATE SEQUENCE  IF NOT EXISTS score_seq START WITH 1 INCREMENT BY 1;
+
+DROP TABLE IF EXISTS Score;
+CREATE TABLE IF NOT EXISTS Score (
+  id BIGINT NOT NULL,
+   score SMALLINT NOT NULL,
+   game_id BIGINT,
+   CONSTRAINT pk_score PRIMARY KEY (id)
+);
+
+ALTER TABLE Score ADD CONSTRAINT FK_SCORE_ON_GAME FOREIGN KEY (game_id) REFERENCES Game (id);
+
+CREATE SEQUENCE IF NOT EXISTS user_seq START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE IF NOT EXISTS "User" (
+  id BIGINT NOT NULL,
+   email VARCHAR(255),
+   username VARCHAR(255),
+   password VARCHAR(255),
+   valid BOOLEAN NOT NULL,
+   createdAt TIMESTAMP WITHOUT TIME ZONE,
+   CONSTRAINT pk_user PRIMARY KEY (id)
+);
+
+ALTER TABLE "User" DROP CONSTRAINT IF EXISTS uc_user_email;
+ALTER TABLE "User" ADD CONSTRAINT uc_user_email UNIQUE (email);
+
+ALTER TABLE "User" DROP CONSTRAINT IF EXISTS uc_user_username;
+ALTER TABLE "User" ADD CONSTRAINT uc_user_username UNIQUE (username);
+
+CREATE TABLE IF NOT EXISTS game_developer (
+  developer_id BIGINT NOT NULL,
+   game_id BIGINT NOT NULL
+);
+
+ALTER TABLE game_developer DROP CONSTRAINT IF EXISTS fk_gamdev_on_developer;
+ALTER TABLE game_developer ADD CONSTRAINT fk_gamdev_on_developer FOREIGN KEY (developer_id) REFERENCES Developer (id);
+
+ALTER TABLE game_developer DROP CONSTRAINT IF EXISTS fk_gamdev_on_game;
+ALTER TABLE game_developer ADD CONSTRAINT fk_gamdev_on_game FOREIGN KEY (game_id) REFERENCES Game (id);
+
+CREATE TABLE IF NOT EXISTS game_genres (
+  game_id BIGINT NOT NULL,
+   genre_id BIGINT NOT NULL
+);
+
+ALTER TABLE game_genres DROP CONSTRAINT IF EXISTS fk_gamgen_on_game;
+ALTER TABLE game_genres ADD CONSTRAINT fk_gamgen_on_game FOREIGN KEY (game_id) REFERENCES Game (id);
+
+ALTER TABLE game_genres DROP CONSTRAINT IF EXISTS fk_gamgen_on_genre;
+ALTER TABLE game_genres ADD CONSTRAINT fk_gamgen_on_genre FOREIGN KEY (genre_id) REFERENCES Genre (id);
+
+CREATE TABLE IF NOT EXISTS game_platform (
+  game_id BIGINT NOT NULL,
+   platform_id BIGINT NOT NULL
+);
+
+ALTER TABLE game_platform DROP CONSTRAINT IF EXISTS fk_gampla_on_game;
+ALTER TABLE game_platform ADD CONSTRAINT fk_gampla_on_game FOREIGN KEY (game_id) REFERENCES Game (id);
+
+ALTER TABLE game_platform DROP CONSTRAINT IF EXISTS fk_gampla_on_platform;
+ALTER TABLE game_platform ADD CONSTRAINT fk_gampla_on_platform FOREIGN KEY (platform_id) REFERENCES Platform (id);
+
