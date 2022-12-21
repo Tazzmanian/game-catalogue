@@ -2,6 +2,7 @@ package com.catalogue.gamecatalogue.api;
 
 import com.catalogue.gamecatalogue.model.CreateGameDTO;
 import com.catalogue.gamecatalogue.service.GameService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,8 +18,8 @@ public class GameController {
     }
 
     @PostMapping("")
-    public long createGame(@Valid @RequestBody CreateGameDTO dto) {
-        return gameService.createGame(dto);
+    public ResponseEntity<Long> createGame(@Valid @RequestBody CreateGameDTO dto) {
+        return ResponseEntity.ok(gameService.createGame(dto));
     }
 
     @GetMapping("/{id}")

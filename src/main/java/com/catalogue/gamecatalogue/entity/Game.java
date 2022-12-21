@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Game {
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id")
     )
-    private List<Genre> genres;
+    private List<Genre> genres = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST},
             fetch = FetchType.LAZY)
@@ -31,7 +32,7 @@ public class Game {
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "developer_id", referencedColumnName = "id")
     )
-    private List<Developer> developers;
+    private List<Developer> developers = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST},
             fetch = FetchType.LAZY)
@@ -39,12 +40,12 @@ public class Game {
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "platform_id", referencedColumnName = "id")
     )
-    private List<Platform> platforms;
+    private List<Platform> platforms = new ArrayList<>();
 
     @OneToMany(mappedBy = "game")
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "game")
-    private List<Score> scores;
+    private List<Score> scores = new ArrayList<>();
 
 }
