@@ -1,5 +1,6 @@
 package com.catalogue.gamecatalogue.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class Comment {
     private Date createdAt;
     @Basic
     private Date modifiedAt;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;

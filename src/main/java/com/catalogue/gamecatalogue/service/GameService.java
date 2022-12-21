@@ -4,6 +4,7 @@ import com.catalogue.gamecatalogue.dao.*;
 import com.catalogue.gamecatalogue.entity.Game;
 import com.catalogue.gamecatalogue.model.CreateGameDTO;
 import com.catalogue.gamecatalogue.model.GameResponse;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,7 @@ public class GameService {
     public GameResponse getById(long id) {
         Game game = gameRepository.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
         GameResponse dto = new GameResponse();
-
+        BeanUtils.copyProperties(game, dto);
         return dto;
     }
 }

@@ -1,5 +1,6 @@
 package com.catalogue.gamecatalogue.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Genre {
     @Size(min=1, max=255)
     @Column(unique=true)
     private String name;
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "game_genres",
             joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"),
