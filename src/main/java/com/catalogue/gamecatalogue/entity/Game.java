@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -49,4 +50,7 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private List<Score> scores = new ArrayList<>();
 
+    private String description;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date release_date;
 }

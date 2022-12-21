@@ -2,6 +2,7 @@ package com.catalogue.gamecatalogue.api;
 
 import com.catalogue.gamecatalogue.entity.Game;
 import com.catalogue.gamecatalogue.model.CreateGameDTO;
+import com.catalogue.gamecatalogue.model.GameResponse;
 import com.catalogue.gamecatalogue.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,8 @@ public class GameController {
     }
 
     @GetMapping("/{id}")
-    public void getGame(@PathVariable long id) {
-
+    public ResponseEntity<GameResponse> getGame(@PathVariable long id) {
+        return ResponseEntity.ok(gameService.getById(id));
     }
 
     @DeleteMapping("/{id}")

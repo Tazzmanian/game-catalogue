@@ -3,6 +3,7 @@ package com.catalogue.gamecatalogue.service;
 import com.catalogue.gamecatalogue.dao.*;
 import com.catalogue.gamecatalogue.entity.Game;
 import com.catalogue.gamecatalogue.model.CreateGameDTO;
+import com.catalogue.gamecatalogue.model.GameResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,5 +47,12 @@ public class GameService {
 
     public List<Game> getAllGames() {
         return gameRepository.findAll();
+    }
+
+    public GameResponse getById(long id) {
+        Game game = gameRepository.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
+        GameResponse dto = new GameResponse();
+
+        return dto;
     }
 }

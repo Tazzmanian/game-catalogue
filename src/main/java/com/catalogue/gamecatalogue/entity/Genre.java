@@ -2,6 +2,7 @@ package com.catalogue.gamecatalogue.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -9,7 +10,13 @@ import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Genre {
+
+    public Genre(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genre_seq_gen")
     @SequenceGenerator(name = "genre_seq_gen", sequenceName = "genre_seq", allocationSize = 1)
