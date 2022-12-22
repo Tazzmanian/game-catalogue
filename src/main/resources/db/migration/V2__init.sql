@@ -67,7 +67,7 @@ ALTER TABLE Score ADD CONSTRAINT FK_SCORE_ON_GAME FOREIGN KEY (game_id) REFERENC
 
 CREATE SEQUENCE IF NOT EXISTS user_seq START WITH 1 INCREMENT BY 1;
 
-CREATE TABLE IF NOT EXISTS "User" (
+CREATE TABLE IF NOT EXISTS user_table (
   id BIGINT NOT NULL,
    email VARCHAR(255),
    username VARCHAR(255),
@@ -77,11 +77,11 @@ CREATE TABLE IF NOT EXISTS "User" (
    CONSTRAINT pk_user PRIMARY KEY (id)
 );
 
-ALTER TABLE "User" DROP CONSTRAINT IF EXISTS uc_user_email;
-ALTER TABLE "User" ADD CONSTRAINT uc_user_email UNIQUE (email);
+ALTER TABLE user_table DROP CONSTRAINT IF EXISTS uc_user_email;
+ALTER TABLE user_table ADD CONSTRAINT uc_user_email UNIQUE (email);
 
-ALTER TABLE "User" DROP CONSTRAINT IF EXISTS uc_user_username;
-ALTER TABLE "User" ADD CONSTRAINT uc_user_username UNIQUE (username);
+ALTER TABLE user_table DROP CONSTRAINT IF EXISTS uc_user_username;
+ALTER TABLE user_table ADD CONSTRAINT uc_user_username UNIQUE (username);
 
 CREATE TABLE IF NOT EXISTS game_developer (
   developer_id BIGINT NOT NULL,
