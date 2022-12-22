@@ -3,12 +3,15 @@ package com.catalogue.gamecatalogue.conf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@EnableMethodSecurity
+@EnableMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConfig {
 
@@ -19,11 +22,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
         throws Exception {
         http.csrf().disable();
-        http.authorizeHttpRequests(auth -> {
-            auth
-//                    .requestMatchers("/users").permitAll()
-                    .anyRequest().authenticated();
-        });
+        http.authorizeHttpRequests().requestMatchers("/users").permitAll();
+        http.authorizeHttpRequests().anyRequest().authenticated();
+//        http.authorizeHttpRequests().anyRequest().;
         http.formLogin();
         http.httpBasic();
         http.logout((logout) -> logout.permitAll());
@@ -45,8 +46,16 @@ public class SecurityConfig {
 //        return authProvider;
 //    }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            HttpSecurity httpSecurity, UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        return authenticationManagerBuilder.build();
+    }
 }
