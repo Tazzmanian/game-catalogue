@@ -3,11 +3,13 @@ package com.catalogue.gamecatalogue.api;
 import com.catalogue.gamecatalogue.dao.PlatformRepository;
 import com.catalogue.gamecatalogue.entity.Platform;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Secured("ROLE_ADMIN")
 @RestController
 @RequestMapping("platforms")
 public class PlatformController {

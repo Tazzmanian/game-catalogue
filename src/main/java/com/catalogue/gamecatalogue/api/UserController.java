@@ -4,11 +4,13 @@ import com.catalogue.gamecatalogue.entity.User;
 import com.catalogue.gamecatalogue.model.CreateUserDTO;
 import com.catalogue.gamecatalogue.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Secured("ROLE_ADMIN")
 @RestController
 @RequestMapping("users")
 public class UserController {
