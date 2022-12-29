@@ -1,13 +1,12 @@
 # This is comment
 
-@SmokeScenario
+@Login
 Feature: Login into account
   Existing user should be able to login to account using correct credentials
 
-@SmokeTest
+@LoginAdmin
 Scenario: Login into account with correct credentials as admin
   Given User navigates to the application website
-  And User clicks on login button
   And User enters a valid username
   And User enters a valid password
   When User clicks on the login button

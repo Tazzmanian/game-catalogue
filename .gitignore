@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/test/resources/drivers/chromedriver.exe
+/src/test/resources/drivers/geckodriver.exe
+/src/test/resources/drivers/msedgedriver.exe
